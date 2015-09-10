@@ -1,54 +1,49 @@
 /*
- * ===========================================================================
+ * =====================================================================================
  *
- *       Filename:  ili9341_msp430_amperture.c
- *
- *    Description:  Driver package to control a 240x320 TFT screen with an
- *                      ILI9341 interface chip.
+ *       Filename:  ili9341_msp430_amperture.h
  *
  *        Version:  0.1
- *        Created:  09/09/2015 09:43:29 PM
+ *        Created:  09/09/2015 11:36:11 PM
  *       Revision:  none
  *       Compiler:  msp430-gcc
  *
  *         Author:  W. Alex Best (mn), theamp@gmail.com
  *        Company:  Amperture Engineering
  *
- * ===========================================================================
+ * =====================================================================================
  */
+
+#ifndef ILI9341_AMP_H
+#define ILI9341_AMP_H
 
 #include <msp430.h>
 #include <stdint.h>
-#include "spi.h"
-#include "ili9341_msp430_amperture.h"
 
-/* MSP430G2553 to ILI9341 Pinmap 
- *
- *      MSP430  ||   ILI9341
- *              ||
- *       P1_6   ||  SDO(MOSI)
- *       3.3V   ||     LED
- *       P1_5   ||     SCK
- *       P1_7   ||  SDI(MISO)
- *       P1_0   ||     D/C
- *       P1_3   ||    RESET
- *       P1_4   ||     CS
- *       GND    ||     GND
- *       3.3V   ||     VCC
- */
+// Port & Pin Definitions
+#define ILI9341_CS_PORT P1OUT
+#define ILI9341_CS_PIN  BIT4
 
-void lcdInit(){
-    return; 
-}
+#define ILI9341_RESET_PORT P1OUT
+#define ILI9341_RESET_PIN BIT3
 
-void lcdSendCommand(uint8_t command){
-    return;
-}
+#define ILI9341_DC_PORT P1OUT
+#define ILI9341_DC_PIN BIT0
 
-void lcdSendData(uint8_t data){
-    return; 
-}
+// Data/Command Macros
+#define LCD_ENABLE_DATA ILI9341_DC_PORT |= ILI9341_DC_PIN 
+#define LCD_ENABLE_COMMAND ILI9341_DC_PORT &= ~ILI9341_DC_PIN 
 
+// Chip Select Macro
+#define LCD_CHIP_SELECT ILI9341_CS_PORT |= ILI9341_CS_PIN  
+#define LCD_CHIP_DESELECT ILI9341_CS_PORT &= ~ILI9341_CS_PIN  
+
+// Function Prototypes
+void lcdSendCommand(uint8_t);
+void lcdSendData(uint8_t);
+
+
+#endif // ILI9341_AMP_H
 
 /* The MIT License (MIT)
  *
